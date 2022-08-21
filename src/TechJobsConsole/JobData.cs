@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TechJobsConsole
 {
-    class JobData
+    static class JobData
     {
         static List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
         static bool IsDataLoaded = false;
@@ -36,6 +36,32 @@ namespace TechJobsConsole
                 }
             }
             return values;
+        }
+
+        public static bool Contains(this string searchable, string searchTerm, System.StringComparison comparisonType)
+        {
+            return searchable?.IndexOf(searchTerm, comparisonType) >= 0;
+        }
+        public static List<Dictionary<string, string>> FindByValue(string searchTerm)
+        {
+            LoadData();
+
+            List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
+
+            foreach(Dictionary<string, string> row in AllJobs)
+            {
+                foreach(KeyValuePair<string, string> kvp in row)
+                {
+                    bool foundInKey = kvp.Key.Contains(searchTerm, System.StringComparison.InvariantCultureIgnoreCase);
+                    bool foundInValue = kvp.Value.Contains(searchTerm, System.StringComparison.InvariantCultureIgnoreCase);
+
+                    if(foundInKey || foundInValue)
+                    {
+                        AllJobs.Add(row);
+                    }
+                }
+            }
+            return AllJobs;
         }
 
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)

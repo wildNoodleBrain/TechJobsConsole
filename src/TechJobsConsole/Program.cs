@@ -124,7 +124,7 @@ namespace TechJobsConsole
                 {
                     Console.WriteLine("*****");
 
-                    foreach (KeyValuePair<string, string> keyValuePair in job)
+                    foreach (KeyValuePair<string, string> keyValuePair in job)  //Nested Loopity loop
                     {
                         Console.WriteLine($"{keyValuePair.Key} : {keyValuePair.Value}");
                     }
