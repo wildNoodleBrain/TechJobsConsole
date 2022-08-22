@@ -7,12 +7,17 @@ namespace TechJobsConsole
     {
         static void Main(string[] args)
         {
+            /* if (arg is null)
+             {
+                 throw new ArgumentNullException(nameof(arg));
+             }*/
             // Create two Dictionary vars to hold info for menu and data
 
             // Top-level menu options
             Dictionary<string, string> actionChoices = new Dictionary<string, string>();
             actionChoices.Add("search", "Search");
             actionChoices.Add("list", "List");
+
 
             // Column options
             Dictionary<string, string> columnChoices = new Dictionary<string, string>();
@@ -63,7 +68,9 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
+                        //Console.WriteLine("Search all fields not yet implemented.");
                     }
                     else
                     {
@@ -120,12 +127,16 @@ namespace TechJobsConsole
         {
             if (someJobs.Count > 0)
             {
+                //looping to go through list Dictionary<string, string> list type
                 foreach (Dictionary<string, string> job in someJobs)
                 {
                     Console.WriteLine("*****");
 
+                    //looping to go through Dictionary
                     foreach (KeyValuePair<string, string> keyValuePair in job)  //Nested Loopity loop
                     {
+                        
+                        //print out keyvaluepair (kvp)
                         Console.WriteLine($"{keyValuePair.Key} : {keyValuePair.Value}");
                     }
                     Console.WriteLine("*****");

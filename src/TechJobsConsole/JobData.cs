@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Text;
 
 namespace TechJobsConsole
@@ -38,32 +38,6 @@ namespace TechJobsConsole
             return values;
         }
 
-        public static bool Contains(this string searchable, string searchTerm, System.StringComparison comparisonType)
-        {
-            return searchable?.IndexOf(searchTerm, comparisonType) >= 0;
-        }
-        public static List<Dictionary<string, string>> FindByValue(string searchTerm)
-        {
-            LoadData();
-
-            List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
-
-            foreach(Dictionary<string, string> row in AllJobs)
-            {
-                foreach(KeyValuePair<string, string> kvp in row)
-                {
-                    bool foundInKey = kvp.Key.Contains(searchTerm, System.StringComparison.InvariantCultureIgnoreCase);
-                    bool foundInValue = kvp.Value.Contains(searchTerm, System.StringComparison.InvariantCultureIgnoreCase);
-
-                    if(foundInKey || foundInValue)
-                    {
-                        AllJobs.Add(row);
-                    }
-                }
-            }
-            return AllJobs;
-        }
-
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
             // load data, if not already loaded
@@ -73,9 +47,9 @@ namespace TechJobsConsole
 
             foreach (Dictionary<string, string> row in AllJobs)
             {
-                string aValue = row[column];
+                string aValue = row[column];               
 
-                if (aValue.Contains(value))
+                if (aValue.ToLower().Contains(value.ToLower())) //makes case insensitive for someone to lowercase letters 
                 {
                     jobs.Add(row);
                 }
@@ -97,12 +71,12 @@ namespace TechJobsConsole
 
             List<string[]> rows = new List<string[]>();
 
-            using (StreamReader reader = File.OpenText("job_data.csv"))
+            using (StreamReader reader = File.OpenText("job_data.csv")) //opens or accesses the jobs in the csv file
             {
                 while (reader.Peek() >= 0)
                 {
                     string line = reader.ReadLine();
-                    string[] rowArrray = CSVRowToStringArray(line);
+                    string[] rowArrray = CSVRowToStringArray(line); //Goes through each item
                     if (rowArrray.Length > 0)
                     {
                         rows.Add(rowArrray);
@@ -164,5 +138,31 @@ namespace TechJobsConsole
 
             return rowValues.ToArray();
         }
+             //FindByValue Method
+    
+        //Will only take in a VALUE bc it is not searching through a specific column
+        public static List<Dictionary<string, string>> FindByValue(string searchTerm)
+    {
+
+            //load data, if not already loaded
+            LoadData();
+
+        List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
+
+        foreach (Dictionary<string, string> row in AllJobs)
+        {
+            foreach (KeyValuePair<string, string> kvp in row)  //
+            {
+                bool foundInKey = kvp.Key.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase);
+                bool foundInValue = kvp.Value.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase);
+
+                if (foundInKey || foundInValue)
+                {
+                    AllJobs.Add(row);
+                }
+            }
+        }
+        return AllJobs;
     }
+}
 }
