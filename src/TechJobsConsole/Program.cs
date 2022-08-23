@@ -14,18 +14,23 @@ namespace TechJobsConsole
             // Create two Dictionary vars to hold info for menu and data
 
             // Top-level menu options
-            Dictionary<string, string> actionChoices = new Dictionary<string, string>();
-            actionChoices.Add("search", "Search");
-            actionChoices.Add("list", "List");
+
+            Dictionary<string, string> actionChoices = new Dictionary<string, string>
+            {
+                { "search", "Search" },
+                { "list", "List" }
+            };
 
 
             // Column options
-            Dictionary<string, string> columnChoices = new Dictionary<string, string>();
-            columnChoices.Add("core competency", "Skill");
-            columnChoices.Add("employer", "Employer");
-            columnChoices.Add("location", "Location");
-            columnChoices.Add("position type", "Position Type");
-            columnChoices.Add("all", "All");
+            Dictionary<string, string> columnChoices = new Dictionary<string, string>
+            {
+                { "core competency", "Skill" },
+                { "employer", "Employer" },
+                { "location", "Location" },
+                { "position type", "Position Type" },
+                { "all", "All" }
+            };
 
             Console.WriteLine("Welcome to LaunchCode's TechJobs App!");
 

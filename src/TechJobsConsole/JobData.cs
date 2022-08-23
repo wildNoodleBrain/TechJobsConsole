@@ -45,9 +45,9 @@ namespace TechJobsConsole
 
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
-            foreach (Dictionary<string, string> row in AllJobs)
+            foreach (Dictionary<string, string> row in AllJobs) ///loops through ALL OF THE JOBS
             {
-                string aValue = row[column];               
+                string aValue = row[column];  /// only one key value column       
 
                 if (aValue.ToLower().Contains(value.ToLower())) //makes case insensitive for someone to lowercase letters 
                 {
@@ -147,22 +147,22 @@ namespace TechJobsConsole
             //load data, if not already loaded
             LoadData();
 
-        List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
+        List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
         foreach (Dictionary<string, string> row in AllJobs)
         {
             foreach (KeyValuePair<string, string> kvp in row)  //
             {
-                bool foundInKey = kvp.Key.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase);
+                ///bool foundInKey = kvp.Key.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase); ///extra we're searching for what's in the value
                 bool foundInValue = kvp.Value.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase);
 
-                if (foundInKey || foundInValue)
+                if (foundInValue)
                 {
-                    AllJobs.Add(row);
+                    jobs.Add(row);
                 }
             }
         }
-        return AllJobs;
+        return jobs;
     }
 }
 }
